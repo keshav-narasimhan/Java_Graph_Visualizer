@@ -93,13 +93,14 @@ public class Main extends Application {
 		});
 		
 		Stage secondaryStage = new Stage();
-		secondaryStage.setX(300);
-		secondaryStage.setY(500);
+		secondaryStage.setX(10);
+		secondaryStage.setY(40);
 		secondaryStage.setTitle("Choose Graph Algorithm"); 
 		StackPane secondaryPane = new StackPane();
 		Button chooseBFS = new Button("BFS");
-		chooseBFS.setTranslateY(50);
+		chooseBFS.setTranslateY(10);
 		Button chooseDFS = new Button("DFS");
+		chooseDFS.setTranslateY(-40);
 		
 		chooseBFS.setOnAction(new EventHandler<ActionEvent>() { // what to do when butt is pressed
 			
