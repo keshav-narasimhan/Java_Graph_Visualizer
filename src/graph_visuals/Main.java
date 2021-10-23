@@ -1,12 +1,15 @@
 package graph_visuals;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -22,6 +25,8 @@ public class Main extends Application {
 	private int numClicked = 0;
 	private static Node startNode;
 	private static Node targetNode;
+	private static boolean isDFS;
+	private static boolean isBFS;
 
 	/**
 	 * main method
@@ -33,6 +38,8 @@ public class Main extends Application {
 		launch(args);
 		startNode = null;
 		targetNode = null;
+		isDFS = false;
+		isBFS = false;
 	}
 
 	/**
@@ -67,10 +74,16 @@ public class Main extends Application {
 						startNode = curr_node;
 						numClicked++;
 					} else if (numClicked < 2) {
-						curr_node.setFill(Color.BLUE);
-						targetNode = curr_node;
-						numClicked++;
-						BFS bfs = new BFS(startNode, targetNode, pane, NUM_ROWS, NUM_COLS);
+						// numClicked++;
+						if (targetNode == null) {
+							targetNode = curr_node;
+							curr_node.setFill(Color.BLUE);
+						}
+						
+						if (isBFS) {
+							BFS bfs = new BFS(startNode, targetNode, pane, NUM_ROWS, NUM_COLS);
+						}
+						
 					}
 				} catch(NullPointerException e) {
 					System.out.println("Pick another point! Hint: Try an edge");
@@ -78,6 +91,42 @@ public class Main extends Application {
 			}
 			
 		});
+		
+		Stage secondaryStage = new Stage();
+		secondaryStage.setX(300);
+		secondaryStage.setY(500);
+		secondaryStage.setTitle("Choose Graph Algorithm"); 
+		StackPane secondaryPane = new StackPane();
+		Button chooseBFS = new Button("BFS");
+		chooseBFS.setTranslateY(50);
+		Button chooseDFS = new Button("DFS");
+		
+		chooseBFS.setOnAction(new EventHandler<ActionEvent>() { // what to do when butt is pressed
+			
+			@Override
+			public void handle(ActionEvent event) {
+				isBFS = true;
+				if (targetNode != null) {
+					BFS bfs = new BFS(startNode, targetNode, pane, NUM_ROWS, NUM_COLS);
+				}
+			}
+			
+		});
+		
+		chooseDFS.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				isDFS = true;
+			}
+			
+		});
+		
+		secondaryPane.getChildren().add(chooseBFS);
+		secondaryPane.getChildren().add(chooseDFS);
+		Scene secondaryScene = new Scene(secondaryPane, 200, 200); // creates a second scene object with the Stackpane
+		secondaryStage.setScene(secondaryScene); // puts the scene onto the second stage 
+		secondaryStage.show(); // display the stage with the scene
 		
 		primaryStage.setScene(new Scene(pane, 800, 600));
 		primaryStage.show();
