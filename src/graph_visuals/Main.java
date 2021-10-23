@@ -13,6 +13,9 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+	/**
+	 * Private fields of Main
+	 */
 	static final int NUM_ROWS = 72;
 	static final int NUM_COLS = 53;
 	static final int BOX_SIZE = 10;
@@ -20,6 +23,11 @@ public class Main extends Application {
 	private static Node startNode;
 	private static Node targetNode;
 
+	/**
+	 * main method
+	 * initializes startNode & targetNode
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
@@ -27,6 +35,12 @@ public class Main extends Application {
 		targetNode = null;
 	}
 
+	/**
+	 * Overwritten method for Application
+	 * Will draw grid lines on created grid
+	 * allows user to select start node & target node on mouse click
+	 * @param primaryStage -- Stage we will use to hold Scenes & Panes
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		// TODO Auto-generated method stub
@@ -47,7 +61,6 @@ public class Main extends Application {
 				try {
 					x = pane.getColumnIndex(clickedNode);
 					y = pane.getRowIndex(clickedNode);
-					System.out.println(x + " " + y);
 					Rectangle curr_node = (Rectangle) clickedNode;
 					if (numClicked < 1) {
 						curr_node.setFill(Color.GREEN);
@@ -70,6 +83,11 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 	
+	/**
+	 * will draw grid lines on the GridPane passed
+	 * NUM_ROWS x NUM_COLS
+	 * @param pane -- pane on which we draw the grid lines
+	 */
 	private void drawGridLines(GridPane pane) {
 		for (int i = 0; i < NUM_ROWS; i++) {
 			for (int j = 0; j < NUM_COLS; j++) {
