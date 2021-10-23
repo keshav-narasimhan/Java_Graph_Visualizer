@@ -17,8 +17,8 @@ public class Main extends Application {
 	static final int NUM_COLS = 53;
 	static final int BOX_SIZE = 10;
 	private int numClicked = 0;
-	private static Rectangle startNode;
-	private static Rectangle targetNode;
+	private static Node startNode;
+	private static Node targetNode;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -57,6 +57,7 @@ public class Main extends Application {
 						curr_node.setFill(Color.BLUE);
 						targetNode = curr_node;
 						numClicked++;
+						BFS bfs = new BFS(startNode, targetNode, pane, NUM_ROWS, NUM_COLS);
 					}
 				} catch(NullPointerException e) {
 					
@@ -79,13 +80,4 @@ public class Main extends Application {
 			}
 		}
 	}
-	
-	public Rectangle getStartNode() {
-		return this.startNode;
-	}
-	
-	public Rectangle getTargetNode() {
-		return this.targetNode;
-	}
-
 }
