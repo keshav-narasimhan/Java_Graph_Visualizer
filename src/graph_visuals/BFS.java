@@ -1,5 +1,6 @@
 package graph_visuals;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -33,6 +34,7 @@ public class BFS {
 	private Queue<Node> all_rects;
 	private HashSet<Node> visitedNodes;
 	private AnimationTimer timer;
+	private ArrayList<ArrayList<Node>> path;
 	
 	/**
 	 * Constructor that initializes fields of BFS
@@ -57,6 +59,11 @@ public class BFS {
 		
 		targetX = pane.getColumnIndex(two);
 		targetY = pane.getRowIndex(two);
+		
+		path = new ArrayList<>();
+		for (int i = 0; i < this.pane.getChildren().size(); i++) {
+			path.add(new ArrayList<>());
+		}
 		
 		all_rects = new LinkedList<>();
 		all_rects.add(startNode);
@@ -88,6 +95,8 @@ public class BFS {
 						if (currX < cols - 1 && currX >= 0 && currY < rows - 1 && currY >= 0) {
 							all_rects.add(n);
 							visitedNodes.add(n);
+							int index = this.pane.getChildren().indexOf(n);
+							this.path.get(index).add(curr);
 						}
 					}
 				}
@@ -98,11 +107,43 @@ public class BFS {
 				curr_rect.setFill(Color.YELLOW);
 			}
 			
-		} else {
-			timer.stop();
+		} 
+//		} else {
+//			timer.stop();
+//		}
+		
+		if (currX == targetX && currY == targetY) {
+			this.all_rects.clear();
 		}
 		
 	} 
+	
+	public void highlightPath() {
+		int index = this.pane.getChildren().indexOf(targetNode);
+		targetNode = this.path.get(index).get(0);
+		Rectangle rect = (Rectangle) targetNode;
+		rect.setFill(Color.ORANGE);
+	}
+	
+	public Queue<Node> getContains() {
+		return this.all_rects;
+	}
+	
+	public ArrayList<ArrayList<Node>> getPath() {
+		return this.path;
+	}
+	
+	public AnimationTimer getTimer() {
+		return this.timer;
+	}
+	
+	public Node getStart() {
+		return this.startNode;
+	}
+	
+	public Node getTarget() {
+		return this.targetNode;
+	}
 	
 }
 
@@ -128,7 +169,15 @@ class AnimateTimerBFS extends AnimationTimer {
 	@Override
 	public void handle(long now) {
 		// TODO Auto-generated method stub
-		bfs.runBFS();
+		if (!this.bfs.getContains().isEmpty()) {
+			bfs.runBFS();
+		} else {
+			if (this.bfs.getTarget() != this.bfs.getStart()) {
+				this.bfs.highlightPath();
+			} else {
+				this.bfs.getTimer().stop();
+			}
+		}
 	}
 	
 }
