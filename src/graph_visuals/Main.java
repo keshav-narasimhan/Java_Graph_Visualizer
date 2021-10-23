@@ -19,8 +19,8 @@ public class Main extends Application {
 	/**
 	 * Private fields of Main
 	 */
-	static final int NUM_ROWS = 72;
-	static final int NUM_COLS = 53;
+	static final int NUM_ROWS = 50;
+	static final int NUM_COLS = 50;
 	static final int BOX_SIZE = 10;
 	private int numClicked = 0;
 	private static Node startNode;
@@ -82,6 +82,8 @@ public class Main extends Application {
 						
 						if (isBFS) {
 							BFS bfs = new BFS(startNode, targetNode, pane, NUM_ROWS, NUM_COLS);
+						} else if (isDFS) {
+							DFS dfs = new DFS(startNode, targetNode, pane, NUM_ROWS, NUM_COLS);
 						}
 						
 					}
@@ -119,6 +121,9 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				isDFS = true;
+				if (targetNode != null) {
+					DFS dfs = new DFS(startNode, targetNode, pane, NUM_ROWS, NUM_COLS);
+				}
 			}
 			
 		});

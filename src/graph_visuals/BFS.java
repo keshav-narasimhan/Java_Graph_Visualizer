@@ -64,7 +64,7 @@ public class BFS {
 		currX = startX;
 		currY = startY;
 		
-		timer = new AnimateTimer(this);
+		timer = new AnimateTimerBFS(this);
 		timer.start();
 	}
 	
@@ -106,7 +106,7 @@ public class BFS {
 	
 }
 
-class AnimateTimer extends AnimationTimer {
+class AnimateTimerBFS extends AnimationTimer {
 	/**
 	 * Private fields of AnimateTimer class
 	 */
@@ -116,7 +116,7 @@ class AnimateTimer extends AnimationTimer {
 	 * Constructor that initializes fields of AnimateTimer class
 	 * @param bfs -- record of BFS object using the timer
 	 */
-	public AnimateTimer(BFS bfs) {
+	public AnimateTimerBFS(BFS bfs) {
 		this.bfs = bfs;
 	}
 
