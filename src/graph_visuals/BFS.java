@@ -13,24 +13,36 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class BFS {
-	Node startNode;
-	Node targetNode;
-	GridPane pane;
-	int cols;
-	int rows;
+	/**
+	 * Private fields of BFS class
+	 */
+	private Node startNode;
+	private Node targetNode;
+	private GridPane pane;
+	private int cols;
+	private int rows;
 	
-	int startX;
-	int startY;
-	int targetX;
-	int targetY;
+	private int startX;
+	private int startY;
+	private int targetX;
+	private int targetY;
 	
-	int currX;
-	int currY;
+	private int currX;
+	private int currY;
 	
-	Queue<Node> all_rects;
-	HashSet<Node> visitedNodes;
-	AnimationTimer timer;
+	private Queue<Node> all_rects;
+	private HashSet<Node> visitedNodes;
+	private AnimationTimer timer;
 	
+	/**
+	 * Constructor that initializes fields of BFS
+	 * start an AnimationTimer that will animate visuals of BFS algorithm
+	 * @param one -- start Node
+	 * @param two -- target Node
+	 * @param pane -- current GridPane
+	 * @param cols -- number of columns in grid
+	 * @param rows -- number of rows in grid
+	 */
 	public BFS(Node one, Node two, GridPane pane, int cols, int rows) {
 		startNode = one;
 		targetNode = two;
@@ -54,10 +66,12 @@ public class BFS {
 		
 		timer = new AnimateTimer(this);
 		timer.start();
-		
-		// runBFS();
 	}
 	
+	/**
+	 * Each time this method is called from handle(), it will add all neighboring nodes to the queue
+	 * will color the current node yellow once it's done processing itself
+	 */
 	public void runBFS() {
 		
 		if ((currX != targetX || currY != targetY) && !all_rects.isEmpty()) {
@@ -93,16 +107,27 @@ public class BFS {
 }
 
 class AnimateTimer extends AnimationTimer {
-	BFS bfs;
+	/**
+	 * Private fields of AnimateTimer class
+	 */
+	private BFS bfs;
 	
+	/**
+	 * Constructor that initializes fields of AnimateTimer class
+	 * @param bfs -- record of BFS object using the timer
+	 */
 	public AnimateTimer(BFS bfs) {
 		this.bfs = bfs;
 	}
 
+	/**
+	 * Overwritten method for AnimationTimer
+	 * each frame will call runBFS()
+	 * @param now -- determines the length of each frame
+	 */
 	@Override
 	public void handle(long now) {
 		// TODO Auto-generated method stub
-		
 		bfs.runBFS();
 	}
 	
