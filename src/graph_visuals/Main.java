@@ -60,7 +60,7 @@ public class Main extends Application {
 						BFS bfs = new BFS(startNode, targetNode, pane, NUM_ROWS, NUM_COLS);
 					}
 				} catch(NullPointerException e) {
-					
+					System.out.println("Pick another point! Hint: Try an edge");
 				}
 			}
 			
